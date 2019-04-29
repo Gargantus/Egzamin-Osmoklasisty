@@ -1,3 +1,3 @@
 # Egzamin-Osmoklasisty
 Gra na konkurs C++
-Kebab tylko z lagodnym
+Kebab tylko z ostrym
