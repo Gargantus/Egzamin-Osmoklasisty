@@ -5,4 +5,4 @@ Gra na konkurs C++
 
 
 
-Kebab tylko z kurczakiem
+Kebab tylko z baranin¹
