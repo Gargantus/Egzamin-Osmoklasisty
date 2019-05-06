@@ -23,11 +23,11 @@ char *tr(char *str)
    return buff;
 }
 
-int Segment = 6;
+int Segment = 3;
 
 string Przeciwnik;
 int Poziom = 1;
-int Zycie = 1;
+int Zycie = 10;
 int Zdrowie;
 int Magia = 1;
 int Sila = 3;
@@ -44,6 +44,7 @@ int PSzczescie;
 int WstecznePZdrowie;
 char wybor;
 int i;
+
 int losuj(int l)
 {
     srand(time(NULL));
@@ -66,7 +67,10 @@ void walka(string Nazwa,int Poziom)
     cout << endl;
     cout << "Atakuje ciebie "<<Nazwa<< " na poziomie " <<Poziom<<"."<<endl;
     cout << endl;
-    int Tura = 1;
+    float Tura = 1;
+    int Zatrucie = 3;
+    int Wzmocnienie = 1;
+    int Czas = 0;
     while ((Tura != 3) && (Zdrowie != 0))
     {
     //Wybór ruchu
@@ -75,28 +79,50 @@ void walka(string Nazwa,int Poziom)
     cout << "Twoja tura"<<endl;
     cout << "Wybierz ruch"<<endl;
     cout << "1. Ataki"<<endl;
+    if (Czas == 0)
+    {
     cout << tr("2. Umiejêtnoœci")<<endl;
-    cout << "3. Przedmioty"<<endl;
+    }
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
     wybor = getch();
     system("cls");
+    if (Czas == 0)
+    {
     switch(wybor)
     {
     case '1':
     Tura = 4;
     break;
     case '2':
-    cout << tr("Wybierz umiejêtnoœæ")<<endl;
-    cout << "Brak XD"<<endl;
-    break;
-    case '3':
-    cout << "Wybierz przedmiot"<<endl;
-    cout << "Brak XD"<<endl;
+    Tura = 4.5;
     break;
     default:
     tekst(tr("Nie wiem o co ci chodzi, naucz siê czytaæ."));
     break;
     }
+    } else
+    {
+    switch(wybor)
+    {
+    case '1':
+    Tura = 4;
+    break;
+    default:
+    tekst(tr("Nie wiem o co ci chodzi, naucz siê czytaæ."));
+    break;
+    }
+    }
+    }
+    //Umiejêtnoœci
+    while (Tura == 4.5)
+    {
+        cout <<tr("Wybierz umiejêtnoœæ.")<<endl;
+        cout <<tr("Wpisz drug¹ liczbê aby sprawdziæ jej opis.")<<endl;
+        cout <<tr("Umiejêtnoœci mo¿esz u¿yæ tylko raz na trzy tury")<<endl;
+        cout <<tr("1,4. Leczenie")<<endl;
+        cout <<tr("2,5. Zatrucie")<<endl;
+        cout <<tr("3,6. Uczenie siê")<<endl;
+        Tura = 5.5;
     }
     //Ataki fizyczne
     while (Tura == 4)
@@ -116,20 +142,20 @@ void walka(string Nazwa,int Poziom)
         switch(wybor)
         {
         case'1':
-        PZdrowie = PZdrowie - Sila*2;
+        PZdrowie = PZdrowie - Sila*2*Wzmocnienie-Zatrucie;
         Tura = 6;
         break;
         case'2':
         if (losuj(100) > 50)
         {
-        PZdrowie = PZdrowie - Sila*4;
+        PZdrowie = PZdrowie - Sila*4*Wzmocnienie-Zatrucie;
         }
         Tura = 6;
         break;
         case'3':
         if (losuj(100) < 11)
         {
-        PZdrowie = PZdrowie/2;
+        PZdrowie = PZdrowie/2/Wzmocnienie-Zatrucie;
         }
         Tura = 6;
         break;
@@ -141,6 +167,47 @@ void walka(string Nazwa,int Poziom)
         break;
         case'6':
         cout <<tr("Odbiera po³owê zdrowia przeciwnikowi, ekstremalnie ma³e szanse na trafienie.")<<endl;
+        break;
+        }
+    }
+    while (Tura == 5.5)
+    {
+        WstecznePZdrowie = PZdrowie;
+        FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+        wybor = getch();
+        switch (wybor)
+        {
+        case'1':
+        Zdrowie += 50;
+        if (Zdrowie > 100)
+        {
+            Zdrowie = 100;
+        }
+        Czas = 3;
+        Tura = 6;
+        break;
+        case'2':
+        Zatrucie = 3;
+        PZdrowie -= Zatrucie;
+        Czas = 3;
+        Tura = 6;
+        break;
+        case'3':
+        Wzmocnienie = 1.5;
+        Czas = 3;
+        Tura = 6;
+        break;
+        case'4':
+        cout << tr("Odnawia po³owê twojego zdrowia.")<<endl;
+        break;
+        case'5':
+        cout << tr("Zadawaj przeciwnikowi trzy punkty obra¿eñ co turê.")<<endl;
+        break;
+        case'6':
+        cout << tr("Zwiêksz sobie atak pó³torej razy na trzy tury.")<<endl;
+        break;
+        default:
+        tekst(tr("Nie wiem o co ci chodzi, naucz siê czytaæ."));
         break;
         }
     }
@@ -160,7 +227,15 @@ void walka(string Nazwa,int Poziom)
         }
         else
         {
-        cout << tr("Chybi³eœ noobie");
+            if (Czas != 3)
+            {
+                cout << tr("Chybi³eœ noobie");
+            }
+            else
+            {
+                cout << tr("Czekasz");
+            }
+
         }
         if (PZdrowie < 1)
         {
@@ -191,6 +266,18 @@ void walka(string Nazwa,int Poziom)
     Sleep(4000);
     Tura = 1;
     system("cls");
+    }
+    if (Czas != 0)
+    {
+        Czas -= 1;
+    }
+    if (Czas == 0)
+    {
+        Wzmocnienie = 1;
+    }
+    if (Czas == 0)
+    {
+        Zatrucie = 0;
     }
     }
     if (Zdrowie == 0)
@@ -302,7 +389,7 @@ int main()
             PoziomP = 6;
             PZdrowie = 20;
             PMagia = 0;
-            PSila = 99999;
+            PSila = 3;
             PWytrzymalosc = 1;
             PSzczescie = 2;
             PZycie = PZdrowie * 5;
@@ -410,6 +497,7 @@ int main()
             tekst(tr("Niestety Ikitiki jest codziennie sprz¹tana przez lokalnych tubylców przez co nie ma tu ani jednej ska³y."));
             tekst(tr("Zacz¹³eœ kopaæ górê kotwiczk¹."));
             tekst(tr("Dokopa³eœ siê na sam szczyt."));
+            Segment = 7;
             break;
             case'2':
             tekst(tr("Zak³adasz czapkê na g³owê."));
@@ -421,6 +509,7 @@ int main()
             tekst(tr("Tutaj wstaw walkê."));
             tekst(tr("Str¹ci³eœ balony pilota, który spad³ i zwichn¹³ sobie kostkê."));
             tekst(tr("Bez przeszkód dolecia³eœ na szczyt."));
+            Segment = 7;
             break;
             case'3':
             tekst(tr("W³¹czasz konsolê programu."));
@@ -437,6 +526,60 @@ int main()
             tekst(tr("Nie wiem o co ci chodzi, naucz siê czytaæ."));
             break;
         }
+    }
+    while (Segment == 7)
+    {
+        tekst(tr("Rozgl¹dasz siê za swoj¹ szko³¹."));
+        tekst(tr("Zauwa¿asz j¹ w oddali."));
+        tekst(tr("Zauwa¿asz te¿ bardzo d³ug¹ tyrolkê zmierzaj¹c¹ w stronê szko³y."));
+        tekst(tr("Bierzesz pobliski kij i zje¿d¿asz nim na tyrolce."));
+        tekst(tr("Zje¿d¿asz ju¿ dobre pare minut."));
+        tekst(tr("Nagle spostrzegasz armiê husarzy wzbijaj¹c¹ siê w powietrze."));
+        tekst(tr("Ty zawsze spa³eœ na polaku, wiêc lec¹ w twoj¹ stronê."));
+        Segment = 8;
+    }
+    while (Segment == 8)
+    {
+        tekst(tr("Co robisz?"));
+        tekst(tr("1. Rzucasz im kebaba."));
+        tekst(tr("2. Recytujesz Pana Tadeusza."));
+        tekst(tr("3. Uderzasz ich z kija."));
+        FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+        wybor = getch();
+        system("cls");
+        switch(wybor)
+        {
+        case'1':
+        tekst(tr("Rzuci³eœ kebabem, którego ukrad³eœ tubylcom."));
+        tekst(tr("Husarze odwrócili od ciebie uwagê i zaczêli goniæ kebaba."));
+        tekst(tr("Jedziesz sobie spokojnie dalej na tyrolce."));
+        Segment = 9;
+        break;
+        case'2':
+        tekst(tr("Mówisz husarzom, ¿e udowodnisz swojej polskoœci recytuj¹c s³ynn¹ inwokacjê."));
+        tekst(tr("Husarze siê zgadzaj¹."));
+        tekst(tr("Zaczynasz."));
+        tekst(tr("Lidfo ojd¿yzno moja."));
+        tekst(tr("Dy jezdeŸ jag strofie."));
+        tekst(tr("Zanim skoñczy³eœ to jeden z husarzy wbi³ ci szablê w mózg."));
+        tekst(tr("Umierasz, cofamy czas."));
+        Sleep(2000);
+        system("cls");
+        break;
+        case'3':
+        tekst(tr("Uderzasz husarza z kija, a ten spada."));
+        tekst(tr("W ramach zemsty reszta naciera na ciebie."));
+        tekst(tr("Tu wstaw walkê."));
+        tekst(tr("Pokona³eœ wszystkich husarzy."));
+        tekst(tr("Jedziesz sobie spokojnie dalej na tyrolce."));
+        Segment = 9;
+        break;
+        }
+
+    }
+    while (Segment == 9)
+    {
+
     }
     return 0;
 }
