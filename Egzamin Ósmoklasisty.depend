@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1555541748 source:c:\users\marcin\desktop\egzamin Ósmoklasisty\main.cpp
+	<iostream>
+	<windows.h>
+	<stdio.h>
+	<cstdlib>
+	<conio.h>
+	<time.h>
+
