@@ -23,7 +23,7 @@ char *tr(char *str)
    return buff;
 }
 
-int Segment = 3;
+int Segment = 9;
 
 string Przeciwnik;
 int Poziom = 1;
@@ -392,7 +392,6 @@ int main()
             PSila = 3;
             PWytrzymalosc = 1;
             PSzczescie = 2;
-            PZycie = PZdrowie * 5;
             walka(Przeciwnik,PoziomP);
             if (Zdrowie != 0)
             {
@@ -452,20 +451,28 @@ int main()
             tekst(tr("Idziesz w stronê góry, w miêdzyczasie twoje cia³o wróci³o do normy."));
             tekst(tr("Jesteœ u stóp góry Ikitiki."));
             tekst(tr("Jest to bardzo stroma góra, bêdziesz potrzebowa³ jakiegoœ sprzêtu."));
-            tekst(tr("Na ziemi le¿y kotwiczka, czapka z helikopterkiem i kartkê z cheatami."));
+            tekst(tr("Na ziemi le¿y kotwiczka, czapka z helikopterkiem i kartka z cheatami."));
             Segment = 6;
             break;
             case'2':
             tekst(tr("Wyzwalasz siê z lin i bierzesz bal do rêki."));
             tekst(tr("Masz szczêœcie, ¿e tubylcy s¹ zajêci jedzeniem twojego ucha i nic nie widz¹."));
             tekst(tr("Tylko jeden ciebie zauwa¿a i leci na ciebie z toporem."));
-            tekst(tr("Tutaj wstaw walkê."));
+            Zdrowie = 10*Zycie;
+            Przeciwnik = "Tubylca";
+            PoziomP = 8;
+            PZdrowie = 50;
+            PSila = 4;
+            walka(Przeciwnik,PoziomP);
+            if (Zdrowie != 0)
+            {
             tekst(tr("Po pokonaniu tubylcy z toporem zakrad³eœ siê ko³o wodza wioski i ukrad³eœ mu mapê"));
             tekst(tr("Postanowi³eœ udaæ siê na górê Ikitiki, aby siê rozejrzeæ."));
             tekst(tr("Jesteœ u stóp góry Ikitiki."));
             tekst(tr("Jest to bardzo stroma góra, bêdziesz potrzebowa³ jakiegoœ sprzêtu."));
-            tekst(tr("Na ziemi le¿y kotwiczka, czapka z helikopterkiem i kartkê z cheatami."));
+            tekst(tr("Na ziemi le¿y kotwiczka, czapka z helikopterkiem i kartka z cheatami."));
             Segment = 6;
+            }
             break;
             case'3':
             tekst(tr("Nic nie robisz, czekasz a¿ tubylcy przygotuj¹ kotleta."));
@@ -506,10 +513,18 @@ int main()
             tekst(tr("Naruszy³eœ ich przestrzeñ powietrzn¹."));
             tekst(tr("Ty masz to w jamie nosowej."));
             tekst(tr("Nagle podlatuje murzyn przywi¹zany do dwóch balonów i mierzy do ciebie z kamienia."));
-            tekst(tr("Tutaj wstaw walkê."));
+            Zdrowie = 10*Zycie;
+            Przeciwnik = "Pilot";
+            PoziomP = 10;
+            PZdrowie = 75;
+            PSila = 5;
+            walka(Przeciwnik,PoziomP);
+            if (Zdrowie != 0)
+            {
             tekst(tr("Str¹ci³eœ balony pilota, który spad³ i zwichn¹³ sobie kostkê."));
             tekst(tr("Bez przeszkód dolecia³eœ na szczyt."));
             Segment = 7;
+            }
             break;
             case'3':
             tekst(tr("W³¹czasz konsolê programu."));
@@ -569,17 +584,50 @@ int main()
         case'3':
         tekst(tr("Uderzasz husarza z kija, a ten spada."));
         tekst(tr("W ramach zemsty reszta naciera na ciebie."));
-        tekst(tr("Tu wstaw walkê."));
+        Zdrowie = 10*Zycie;
+        Przeciwnik = "Husarz";
+        PoziomP = 15;
+        PZdrowie = 100;
+        PSila = 6;
+        walka(Przeciwnik,PoziomP);
+        if (Zdrowie != 0)
+        {
         tekst(tr("Pokona³eœ wszystkich husarzy."));
         tekst(tr("Jedziesz sobie spokojnie dalej na tyrolce."));
         Segment = 9;
+        }
         break;
         }
 
     }
     while (Segment == 9)
     {
-
+       tekst(tr("W koñcu docierasz do swojej szko³y."));
+       tekst(tr("Po wejœciu do szko³y zmieniasz buty w szatni i zmierzasz do swojej klasy."));
+       tekst(tr("Ca³a szko³a jest pusta."));
+       tekst(tr("Wchodzisz do swojej klasy i siadasz na ³awce."));
+       tekst(tr("Siedzi tam tylko egzaminator."));
+       tekst(tr("Tak, to on."));
+       tekst(tr("Thanos"));
+       tekst(tr("Teraz wszystko wyda³o ci siê jasne."));
+       tekst(tr("Thanos chce siê dowiedzieæ gdzie s¹ kamienie nieskoñczonoœci wykorzystuj¹c uczniów."));
+       tekst(tr("Zostawi³eœ egzamin pusty i odda³eœ thanosowi."));
+       tekst(tr("Thanos siê zdenerwowa³."));
+       Zdrowie = 10*Zycie;
+       Przeciwnik = "Thanos";
+       PoziomP = 15;
+       PZdrowie = 125;
+       PSila = 6;
+       walka(Przeciwnik,PoziomP);
+       if (Zdrowie != 0)
+       {
+       tekst(tr("W koñcu pokona³eœ thanosa i zda³eœ egzamin."));
+       tekst(tr("Nagle budzisz siê na klatce."));
+       tekst(tr("Patrzysz na zegarek i widzisz, ¿e minê³y trzy godziny."));
+       tekst(tr("Na szczêœcie twój tata to haker i w³ama³ siê do CKE."));
+       tekst(tr("Dosta³eœ 100% z ka¿dego egzaminu."));
+       tekst(tr("Wygra³eœ ¿ycie."));
+       }
     }
     return 0;
 }
